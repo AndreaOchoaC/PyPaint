@@ -1,0 +1,98 @@
+WindowManager:
+    Inicio:
+    pantalla1:
+    pantalla2
+
+<Inicio>:
+    name: "main"
+    
+
+
+
+
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'fondo_omorii.jpg'   
+
+    
+    GridLayout:
+        cols: 1
+
+        Label:
+            markup: True
+            text: "inicio jwjjeje"
+            color: "#cfa8ff"
+            font_size : 18
+
+        Button:
+            id: btn_inicio
+            text: "ir a pantalla 1"
+            font_size: "18"
+            size_hint : 0.15, 0.15
+            color: "#8a63ff"
+            on_release:
+                app.root.current = "pantalla1"
+                root.manager.transition.direction = "left"
+
+
+<pantalla1>:
+    name: "pantalla1"
+    
+
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'omorii_basil.jpg'
+
+  
+
+    GridLayout:
+        cols: 1
+
+        Label:
+            markup: True
+            text: "pantalla2 jwjjeje"
+            color: "#ddc1ff"
+            font_size : 18
+
+        Button:
+            id: btn_1
+            text: "un picnic?"
+            font_size: "18"
+            size_hint : 0.15, 0.15
+            color: "#5d0089"
+            on_release:
+                app.root.current = "pantalla2"
+                root.manager.transition.direction = "right"
+
+
+<pantalla2>:
+    name: "pantalla2"
+    
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'omorii_picnic.jpg'
+
+  
+
+    GridLayout:
+        cols: 1
+
+        Label:
+            markup: True
+        
+            color: "#ddc1ff"
+            font_size : 18
+
+        Button:
+            id: btn_1
+            text: ":3"
+            font_size: "18"
+            size_hint : 0.15, 0.15
+            color: "#5d0089"
+            
