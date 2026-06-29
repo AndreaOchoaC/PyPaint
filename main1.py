@@ -30,8 +30,10 @@ custom_cursor = pygame.transform.scale(custom_cursor, (40, 40))
 
 # cursor personalizado DEBE IR DENTRO DEL CICLO
 # pero ahorita entra en conflicto con nuestro fondo
-pos = pygame.mouse.get_pos()
-screen.blit(custom_cursor, pos)
+'''pos = pygame.mouse.get_pos()
+screen.blit(custom_cursor, pos)'''
+# opción "propia" de pygame
+pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
 
 # ---------- ELEMENTOS DE LA INTERFAZ ----------
 
@@ -114,7 +116,7 @@ class Herramienta:
         else:
             color_borde = (0,0,0)
             grosor_borde = 2
-        pygame.draw.rect(screen, color_borde, self.rect, grosor_borde)  # borde negro
+        pygame.draw.rect(screen, color_borde, self.rect, grosor_borde)  # borde del recuadro
 
     def clic(self, pos):
         return self.rect.collidepoint(pos)
@@ -127,12 +129,24 @@ nombresH = ["free_form", "select_rect", "borrar", "fill",
             "polygon", "elipse", "rounded_rect"]
 
 herramientas = []
+size_tool = 40
+margen= 10 
 
-for h in nombresH:
+'''for h in nombresH:
     nombre_h = h
     path_h = f"IconosMSPaint/{h}.png"
     i = nombresH.index(h)
     tool = Herramienta(nombre_h, path_h, 10, 10+i*50 )
+    herramientas.append(tool)'''
+
+# Versión 2 columnas
+for i, nombre_h in enumerate(nombresH):
+    fila = i // 2   # número de fila
+    col = i % 2     # columna (0 = izquierda, 1 = derecha)
+    x = 20 + col * (size_tool + margen)
+    y = 100 + fila * (size_tool + margen)
+    path_h = f"IconosMSPaint/{nombre_h}.png"
+    tool = Herramienta(nombre_h, path_h, x, y, size_tool)
     herramientas.append(tool)
 
 # Ciclo de juego
