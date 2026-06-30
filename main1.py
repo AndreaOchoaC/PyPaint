@@ -150,11 +150,11 @@ for i, nombre_h in enumerate(nombresH):
     tool = Herramienta(nombre_h, path_h, x, y, size_tool)
     herramientas.append(tool)
 
-# RECUADRO QUE MUESTRA COLOR SELECCIONADO Y HERRAMIENTA
+# RECUADRO QUE MUESTRA COLOR SELECCIONADO Y TAMAÑO DEL PINCEL
 # creamos un Rect(x, y, ancho, alto)
 current_color_rect = pygame.Rect(20, 10, 100, 80)
 pygame.draw.rect(screen, (255,255,255), current_color_rect)
-#pygame.draw.circle(screen, color, (current_color_rect.x + 50, current_color_rect.y + 40), 30)
+pygame.draw.circle(screen, color, (current_color_rect.x + 50, current_color_rect.y + 40), radius)
 pygame.draw.rect(screen, (0,0,0), current_color_rect, 2)
 
 # Ciclo de juego
@@ -197,8 +197,8 @@ while True:
                     print("Color elegido:", nombre)
 
                     # mostrar el color actual en el recuadro de color seleccionado
-                    pygame.draw.rect(screen, color_seleccionado, current_color_rect)
-                    #pygame.draw.circle(screen, color_seleccionado, (current_color_rect.x + 50, current_color_rect.y + 40), radius*1.5)
+                    pygame.draw.rect(screen, (255,255,255), current_color_rect)
+                    pygame.draw.circle(screen, color_seleccionado, (current_color_rect.x + 50, current_color_rect.y + 40), radius*1.5)
                     pygame.draw.rect(screen, (0,0,0), current_color_rect, 2)
 
             # revisar si se hace click en una herramienta
