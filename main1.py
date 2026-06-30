@@ -2,6 +2,7 @@
 
 import pygame
 import sys
+from tools_paint import *
 
 # Initialize Pygame
 pygame.init()
@@ -10,6 +11,9 @@ pygame.init()
 WIDTH, HEIGHT = 800,600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Mi PyPaint") # el texto que sale en la ventana del juego
+
+icono = pygame.image.load("MEDIA/paint_icon.png")
+pygame.display.set_icon(icono)
 
 fondo_original = pygame.image.load("MEDIA/Interfaz1_600x600.png").convert()
 fondo = pygame.transform.scale(fondo_original, (WIDTH, HEIGHT)) # escalar a la pantalla
