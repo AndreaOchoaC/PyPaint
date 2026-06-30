@@ -33,7 +33,7 @@ custom_cursor = pygame.transform.scale(custom_cursor, (40, 40))
 '''pos = pygame.mouse.get_pos()
 screen.blit(custom_cursor, pos)'''
 # opción "propia" de pygame
-pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+#pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
 
 # ---------- ELEMENTOS DE LA INTERFAZ ----------
 
@@ -94,7 +94,7 @@ y_base = HEIGHT - size_cuadro - 40  # margen inferior
 # creamos un Rect(x, y, ancho, alto) para cada recuadro de la paleta
 
 for i, (nombre, rgb) in enumerate(colores_rgb.items()):
-    rect = pygame.Rect(20 + i*(size_cuadro+5), y_base, size_cuadro, size_cuadro)
+    rect = pygame.Rect(25 + i*(size_cuadro+5), y_base, size_cuadro, size_cuadro)
     cuadros.append((rect, nombre, rgb))
 
 # BARRA DE HERRAMIENTAS
@@ -116,7 +116,8 @@ class Herramienta:
         else:
             color_borde = (0,0,0)
             grosor_borde = 2
-        pygame.draw.rect(screen, color_borde, self.rect, grosor_borde)  # borde del recuadro
+
+        pygame.draw.rect(screen, color_borde, self.rect, grosor_borde)
 
     def clic(self, pos):
         return self.rect.collidepoint(pos)
@@ -143,11 +144,18 @@ margen= 10
 for i, nombre_h in enumerate(nombresH):
     fila = i // 2   # número de fila
     col = i % 2     # columna (0 = izquierda, 1 = derecha)
-    x = 20 + col * (size_tool + margen)
-    y = 100 + fila * (size_tool + margen)
+    x = 25 + col * (size_tool + margen)
+    y = 115 + fila * (size_tool + margen)
     path_h = f"IconosMSPaint/{nombre_h}.png"
     tool = Herramienta(nombre_h, path_h, x, y, size_tool)
     herramientas.append(tool)
+
+# RECUADRO QUE MUESTRA COLOR SELECCIONADO Y HERRAMIENTA
+# creamos un Rect(x, y, ancho, alto)
+current_color_rect = pygame.Rect(20, 10, 100, 80)
+pygame.draw.rect(screen, (255,255,255), current_color_rect)
+#pygame.draw.circle(screen, color, (current_color_rect.x + 50, current_color_rect.y + 40), 30)
+pygame.draw.rect(screen, (0,0,0), current_color_rect, 2)
 
 # Ciclo de juego
 
@@ -162,6 +170,14 @@ while True:
     # Barra de herramientas
     for h in herramientas:
         h.dibujar(screen)
+    
+    # Texto de la interfaz
+    texto = font.render("¡Comienza a dibujar!", True, (255, 255, 255))
+    screen.blit(texto, (200, 20))
+
+    # Establecer límite del lienzo (área de dibujo)
+    lienzo_rect = pygame.Rect(150, 100, 600, 400)
+    pygame.draw.rect(screen, (255,255,255), lienzo_rect, 2)  # borde
 
     # ---------- DETECTAR EVENTOS ----------
     for event in pygame.event.get():
@@ -179,6 +195,12 @@ while True:
                 if rect.collidepoint(pos):
                     color_seleccionado = rgb
                     print("Color elegido:", nombre)
+
+                    # mostrar el color actual en el recuadro de color seleccionado
+                    pygame.draw.rect(screen, color_seleccionado, current_color_rect)
+                    #pygame.draw.circle(screen, color_seleccionado, (current_color_rect.x + 50, current_color_rect.y + 40), radius*1.5)
+                    pygame.draw.rect(screen, (0,0,0), current_color_rect, 2)
+
             # revisar si se hace click en una herramienta
             for h in herramientas:
                 if h.clic(pos):
@@ -208,6 +230,9 @@ while True:
     if drawing:
         pos = pygame.mouse.get_pos()
         pygame.draw.circle(screen, color, pos, radius)
+        #limitar a solo dibujar dentro del lienzo (falta refinar)
+        if not lienzo_rect.collidepoint(pos):
+            drawing = False
 
     # Para dibujar con Pygame
     # pygame.draw.circle(surface, color, center, radius, width=0)
